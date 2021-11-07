@@ -1,4 +1,4 @@
-from Domain.cheltuiala import get_nr_apartament, get_suma, get_data, get_tip
+from Domain.cheltuiala2 import get_nr_apartament, get_suma, get_data, get_tip
 from Logic.CRUD import adauga_cheltuiala, get_by_nr_apartament_si_data, sterge_cheltuiala
 
 

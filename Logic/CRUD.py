@@ -1,4 +1,4 @@
-from Domain.cheltuiala import creeaza_cheltuiala, get_nr_apartament, get_suma, get_data, get_tip
+from Domain.cheltuiala2 import creeaza_cheltuiala, get_nr_apartament, get_suma, get_data, get_tip
 
 
 def adauga_cheltuiala(nr_apartament, suma, data, tip, lista):

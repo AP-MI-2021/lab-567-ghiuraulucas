@@ -1,4 +1,4 @@
-from Domain.cheltuiala import to_string, get_nr_apartament, get_data
+from Domain.cheltuiala2 import to_string, get_nr_apartament, get_data
 from Logic.CRUD import adauga_cheltuiala, sterge_cheltuiala, modifica_cheltuiala
 
 
