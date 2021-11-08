@@ -1,5 +1,5 @@
 from Domain.cheltuiala2 import get_nr_apartament, get_suma, get_data, get_tip
-from Logic.CRUD import adauga_cheltuiala, get_by_nr_apartament_si_data, sterge_cheltuiala
+from Logic.CRUD import adauga_cheltuiala, get_by_nr_apartament_si_data, sterge_cheltuiala, modifica_cheltuiala
 
 
 def test_adauga_cheltuiala():
@@ -28,3 +28,12 @@ def test_sterge_cheltuiala():
     assert len(lista) == 1
     assert get_by_nr_apartament_si_data(14, "20.02.2018", lista) is not None
 
+def test_modifica_cheltuiala():
+    lista = []
+    lista = adauga_cheltuiala(23, 150, "20.02.2018", "intretinere", lista)
+    lista = adauga_cheltuiala(14, 200, "20.02.2018", "canal", lista)
+
+    lista = modifica_cheltuiala(23, 800, "20.02.2018", "alte cheltuieli", lista)
+
+    assert get_suma(get_by_nr_apartament_si_data(23, "20.02.2018", lista)) == 800
+    assert get_tip(get_by_nr_apartament_si_data(23, "20.02.2018", lista)) == "alte cheltuieli"

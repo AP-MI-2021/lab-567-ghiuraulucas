@@ -55,12 +55,12 @@ def modifica_cheltuiala(nr_apartament, suma, data, tip, lista):
     # Am bagat aici toti acesti parametri pentru ca ei sunt parametrii noi si cheltuielii. Evident, nr_apartament si data raman la fel.
     '''
     Modifica o lista dupa nr_apartament si data
-    :param nr_apartament:
-    :param suma:
-    :param data:
-    :param tip:
-    :param lista:
-    :return:
+    :param nr_apartament: int
+    :param suma: float
+    :param data: string
+    :param tip: string
+    :param lista: lista de cheltuieli
+    :return: Lista cu cheltuiala ceruta modificata
     '''
     lista_noua = []
     for cheltuiala in lista:
