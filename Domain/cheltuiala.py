@@ -1,5 +1,5 @@
 
-def creeaza_cheltuiala(nr_apartament, suma, data, tip):
+def creeaza_cheltuiala(id, nr_apartament, suma, data, tip):
     '''
     Creeaza un dictionar ce reprezinta o cheltuiala
     :param nr_apartament: int
@@ -9,10 +9,13 @@ def creeaza_cheltuiala(nr_apartament, suma, data, tip):
     :return: un dictionar ce contine o cheltuiala
     '''
 
-    return{"nr_apartament": nr_apartament, "suma": suma, "data": data, "tip": tip }
+    return{"id": id, "nr_apartament": nr_apartament, "suma": suma, "data": data, "tip": tip }
 
 # Acesta este un dictionar cu cheile date intre ghilimele. Arata asa:  {13, 324.99, 28.09.2020, intretinere}
 # De fiecare data cand apelez aceasta functie dand anumiti parametri, mi se creeaza un aftfel de dictionar.
+
+def get_id(cheltuiala):
+    return cheltuiala["id"]
 
 def get_nr_apartament(cheltuiala):
     '''
@@ -32,7 +35,8 @@ def get_tip(cheltuiala):
     return cheltuiala["tip"]
 
 def to_string(cheltuiala):
-    return "nr_apartament: {}, suma: {}, data: {}, tip: {}".format(
+    return "id: {},nr_apartament: {}, suma: {}, data: {}, tip: {}".format(
+        get_id(cheltuiala),
         get_nr_apartament(cheltuiala),
         get_suma(cheltuiala),
         get_data(cheltuiala),

@@ -1,9 +1,10 @@
-from Domain.cheltuiala2 import creeaza_cheltuiala, get_nr_apartament, get_suma, get_data, get_tip
+from Domain.cheltuiala2 import creeaza_cheltuiala, get_nr_apartament, get_suma, get_data, get_tip, get_id
 
 
-def adauga_cheltuiala(nr_apartament, suma, data, tip, lista):
+def adauga_cheltuiala(id, nr_apartament, suma, data, tip, lista):
     '''
     Adauga o cheltuiala intr-o lista
+    :param id: int
     :param nr_apartament: int
     :param suma: float
     :param data: string
@@ -11,20 +12,20 @@ def adauga_cheltuiala(nr_apartament, suma, data, tip, lista):
     :param lista: lista de cheltuieli
     :return: o lista continand atat elementele vechi cat si noua cheltuiala
     '''
-
-    cheltuiala = creeaza_cheltuiala(nr_apartament, suma, data, tip)
+    if get_by_id(id, lista) is not None:
+        raise ValueError("Exista deja o cheltuiala cu acest id.")
+    cheltuiala = creeaza_cheltuiala(id, nr_apartament, suma, data, tip)
     return lista + [cheltuiala]
 
-def get_by_nr_apartament_si_data(nr_apartament, data, lista):
+def get_by_id(id, lista):
     '''
     Returneaza o cheltuiala din lista cu numarul apartamentului dat
-    :param nr_apartament: int
-    :param data: string
+    :param id: int
     :param lista: lista de cheltuieli
     :return: cheltuiala cu numarul de apartament dat din lista, sau None, daca aceasta nu exista
     '''
     for cheltuiala in lista:
-        if get_nr_apartament(cheltuiala) == nr_apartament and get_data(cheltuiala) == data:
+        if get_id(cheltuiala) == id:
             return cheltuiala
     return None
 
@@ -33,28 +34,29 @@ def get_by_nr_apartament_si_data(nr_apartament, data, lista):
 # Ce mai puteam sa fac aici e sa iau dupa un singur criteriu (get_by_nr_apartament) si sa returnez O LISTA de cheltuieli efectuate
 # la acelasi apartament; dar vreau sa pot lua o singura cheltuiala dupa nr apartamentului si data.
 
-def sterge_cheltuiala(nr_apartament, data, lista):
+def sterge_cheltuiala(id, lista):
     l=[]
     '''
-    Sterge o cheltuiala dintr-o lista, dupa nr apartamentului si data
-    :param nr_apartament: int
-    :param data: string
-    :param lista: lista de dictionare
-    :return:
+    Sterge o cheltuiala din lista
+    :param id: int
+    :param lista: lista de cheltuieli
+    :return: Lista fara cheltuiala care a fost scoasa
     '''
-
+    if get_by_id(id, lista) is None:
+        raise ValueError("Nu exista o cheltuiala cu acest id.")
     for cheltuiala in lista:
-        if get_nr_apartament(cheltuiala) == nr_apartament and get_data(cheltuiala) == data:
+        if get_id(cheltuiala) == id:
             pass
         else:
             l.append(cheltuiala)
     return l
 
 
-def modifica_cheltuiala(nr_apartament, suma, data, tip, lista):
+def modifica_cheltuiala(id, nr_apartament, suma, data, tip, lista):
     # Am bagat aici toti acesti parametri pentru ca ei sunt parametrii noi si cheltuielii. Evident, nr_apartament si data raman la fel.
     '''
-    Modifica o lista dupa nr_apartament si data
+    Modifica o lista dupa id
+    :param id: int
     :param nr_apartament: int
     :param suma: float
     :param data: string
@@ -62,10 +64,13 @@ def modifica_cheltuiala(nr_apartament, suma, data, tip, lista):
     :param lista: lista de cheltuieli
     :return: Lista cu cheltuiala ceruta modificata
     '''
+
+    if get_by_id(id, lista) is None:
+        raise ValueError("Nu exista o cheltuiala cu acest id.")
     lista_noua = []
     for cheltuiala in lista:
-        if get_nr_apartament(cheltuiala) == nr_apartament and get_data(cheltuiala) == data:
-            cheltuiala_noua = creeaza_cheltuiala(nr_apartament, suma, data, tip)
+        if get_id(cheltuiala) == id:
+            cheltuiala_noua = creeaza_cheltuiala(id, nr_apartament, suma, data, tip)
             lista_noua.append(cheltuiala_noua)
         else:
             lista_noua.append(cheltuiala)

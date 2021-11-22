@@ -1,8 +1,8 @@
 from Tests.test_all import run_all_tests
-from UI.console import run_menu
+from UI.consola2 import menu2
 
 
 def main():
     run_all_tests()
-    run_menu([])
+    menu2()
 main()
