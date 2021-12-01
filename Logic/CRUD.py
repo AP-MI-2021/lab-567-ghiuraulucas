@@ -1,7 +1,7 @@
-from Domain.cheltuiala2 import creeaza_cheltuiala, get_nr_apartament, get_suma, get_data, get_tip, get_id
+from Domain.cheltuiala2 import creeaza_cheltuiala, get_id
 
 
-def adauga_cheltuiala(id, nr_apartament, suma, data, tip, lista):
+def adauga_cheltuiala(id, nr_apartament, suma, data, tip, lista, undo_list, redo_list):
     '''
     Adauga o cheltuiala intr-o lista
     :param id: int
@@ -15,6 +15,8 @@ def adauga_cheltuiala(id, nr_apartament, suma, data, tip, lista):
     if get_by_id(id, lista) is not None:
         raise ValueError("Exista deja o cheltuiala cu acest id.")
     cheltuiala = creeaza_cheltuiala(id, nr_apartament, suma, data, tip)
+    undo_list.append(lista)
+    redo_list.clear()
     return lista + [cheltuiala]
 
 def get_by_id(id, lista):
@@ -34,7 +36,7 @@ def get_by_id(id, lista):
 # Ce mai puteam sa fac aici e sa iau dupa un singur criteriu (get_by_nr_apartament) si sa returnez O LISTA de cheltuieli efectuate
 # la acelasi apartament; dar vreau sa pot lua o singura cheltuiala dupa nr apartamentului si data.
 
-def sterge_cheltuiala(id, lista):
+def sterge_cheltuiala(id, lista, undo_list, redo_list):
     l=[]
     '''
     Sterge o cheltuiala din lista
@@ -49,10 +51,12 @@ def sterge_cheltuiala(id, lista):
             pass
         else:
             l.append(cheltuiala)
+    undo_list.append(lista)
+    redo_list.clear()
     return l
 
 
-def modifica_cheltuiala(id, nr_apartament, suma, data, tip, lista):
+def modifica_cheltuiala(id, nr_apartament, suma, data, tip, lista, undo_list, redo_list):
     # Am bagat aici toti acesti parametri pentru ca ei sunt parametrii noi si cheltuielii. Evident, nr_apartament si data raman la fel.
     '''
     Modifica o lista dupa id
@@ -74,4 +78,6 @@ def modifica_cheltuiala(id, nr_apartament, suma, data, tip, lista):
             lista_noua.append(cheltuiala_noua)
         else:
             lista_noua.append(cheltuiala)
+    undo_list.append(lista)
+    redo_list.clear()
     return lista_noua

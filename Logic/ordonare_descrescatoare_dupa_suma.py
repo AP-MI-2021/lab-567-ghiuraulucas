@@ -1,9 +1,11 @@
 from Domain.cheltuiala2 import get_suma
 
 
-def ordonare_descrescatoare_dupa_suma(lista):
+def ordonare_descrescatoare_dupa_suma(lista, undo_list, redo_list):
     l = []
     i = 0
+    undo_list.append(lista)
+    redo_list.clear()
     lista_noua = []
     for cheltuiala in lista:
         l.append(float(get_suma(cheltuiala)))

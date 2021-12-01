@@ -4,7 +4,9 @@ from Logic.CRUD import adauga_cheltuiala, get_by_id, sterge_cheltuiala, modifica
 
 def test_adauga_cheltuiala():
     lista = []
-    lista = adauga_cheltuiala(1, 23, 150, "20.02.2018", "intretinere", lista)
+    undo_list = []
+    redo_list = []
+    lista = adauga_cheltuiala(1, 23, 150, "20.02.2018", "intretinere", lista, undo_list, redo_list)
 
     assert len(lista) == 1
     assert get_nr_apartament(get_by_id(1, lista)) == 23
@@ -14,17 +16,19 @@ def test_adauga_cheltuiala():
 
 def test_sterge_cheltuiala():
     lista = []
-    lista = adauga_cheltuiala(1, 23, 150, "20.02.2018", "intretinere", lista)
-    lista = adauga_cheltuiala(2, 14, 150, "20.02.2018", "intretinere", lista)
+    undo_list = []
+    redo_list = []
+    lista = adauga_cheltuiala(1, 23, 150, "20.02.2018", "intretinere", lista, undo_list, redo_list)
+    lista = adauga_cheltuiala(2, 14, 150, "20.02.2018", "intretinere", lista, undo_list, redo_list)
 
-    lista = sterge_cheltuiala(1, lista)
+    lista = sterge_cheltuiala(1, lista, undo_list, redo_list)
 
     assert len(lista) == 1
     assert get_by_id(1, lista) is None
     assert get_by_id(2, lista) is not None
 
     try:
-        lista = sterge_cheltuiala(30, lista)
+        lista = sterge_cheltuiala(30, lista, undo_list, redo_list)
         assert False
     except ValueError:
 
@@ -33,10 +37,12 @@ def test_sterge_cheltuiala():
 
 def test_modifica_cheltuiala():
     lista = []
-    lista = adauga_cheltuiala(1, 23, 150, "20.02.2018", "intretinere", lista)
-    lista = adauga_cheltuiala(2, 14, 200, "20.02.2018", "canal", lista)
+    undo_list = []
+    redo_list = []
+    lista = adauga_cheltuiala(1, 23, 150, "20.02.2018", "intretinere", lista, undo_list, redo_list)
+    lista = adauga_cheltuiala(2, 14, 200, "20.02.2018", "canal", lista, undo_list, redo_list)
 
-    lista = modifica_cheltuiala(1, 23, 800, "20.02.2018", "alte cheltuieli", lista)
+    lista = modifica_cheltuiala(1, 23, 800, "20.02.2018", "alte cheltuieli", lista, undo_list, redo_list)
 
     assert get_suma(get_by_id(1, lista)) == 800
     assert get_tip(get_by_id(1, lista)) == "alte cheltuieli"

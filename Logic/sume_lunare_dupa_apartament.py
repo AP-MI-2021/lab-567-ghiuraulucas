@@ -1,44 +1,68 @@
-from Domain.cheltuiala2 import get_data, creeaza_cheltuiala, get_id, get_nr_apartament, get_suma, get_tip
-from Logic.CRUD import adauga_cheltuiala
+from Domain.cheltuiala2 import get_data, get_nr_apartament, get_suma
+
 
 
 def sume_lunare_dupa_apartament(lista):
-    list = []
+    lista_cheltuieli = []
+    lista_date = []
     lista_luni = []
     lista_nr_apartamente = []
     lista_temporara_1 = []
+    lista_temporara_2 = []
+    lista_temporara_3 = []
+    lista_ani = []
 
     for cheltuiala in lista:
         lista_nr_apartamente.append(get_nr_apartament(cheltuiala))
     for apartament in lista_nr_apartamente:
-        if apartament not in lista_nr_apartamente:
+        if apartament not in lista_temporara_1:
             lista_temporara_1.append(apartament)
     lista_nr_apartamente = lista_temporara_1
 
+    for cheltuiala in lista:
+        lista_date.append(get_data(cheltuiala))
+    for data in lista_date:
+        a = data.split(".")
+        lista_luni.append(a[1])
+    for luna in lista_luni:
+        if luna not in lista_temporara_2:
+            lista_temporara_2.append(luna)
+    lista_luni = lista_temporara_2
 
     for cheltuiala in lista:
-        l = get_data(cheltuiala).split(".")
-        luna = l[1]
-        list = adauga_cheltuiala(get_id(cheltuiala), get_nr_apartament(cheltuiala), get_suma(cheltuiala), luna, get_tip(cheltuiala), list)
-
-
-    for cheltuiala in list:
-        lista_luni.append(get_data(cheltuiala))
-    lista_temporara2 = []
-    for luna in lista_luni:
-        if luna not in lista_temporara2:
-            lista_temporara2.append(luna)
-    lista_luni = lista_temporara2
+        lista_date.append(get_data(cheltuiala))
+    for data in lista_date:
+        a = data.split(".")
+        lista_ani.append(a[2])
+    for an in lista_ani:
+        if an not in lista_temporara_3:
+            lista_temporara_3.append(an)
+    lista_ani = lista_temporara_3
 
     for apartament in lista_nr_apartamente:
-        print("Pentru apartamentul " + str(apartament) + ":")
-        for luna in lista_luni:
-            a = 0
-            for cheltuiala in list:
-                if get_nr_apartament(cheltuiala) == apartament:
-                    if get_data(cheltuiala) == luna:
-                        a = a + get_suma(cheltuiala)
-            print("Suma pentru luna " + str(luna) +" este " + str(a))
+        print("Pentru apartamentul " + str(apartament) +":")
+        for an in lista_ani:
+            print("Pentru anul " + an + ":")
+            lista_cheltuieli = []
+            for cheltuiala in lista:
+                a = get_data(cheltuiala)
+                b = a.split(".")
+                if get_nr_apartament(cheltuiala) == apartament and b[2] == an:
+                    lista_cheltuieli.append(cheltuiala)
+            for luna in lista_luni:
+                suma = 0
+                for cheltuiala in lista_cheltuieli:
+                    a = get_data(cheltuiala)
+                    b = a.split(".")
+                    if b[1] == luna:
+                        suma = suma + get_suma(cheltuiala)
+                print("Pentru luna " + luna + " suma este de: " + str(suma))
+
+
+
+
+
+
 
 
 

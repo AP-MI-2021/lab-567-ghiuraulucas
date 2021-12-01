@@ -1,7 +1,7 @@
 from Domain.cheltuiala2 import get_data, creeaza_cheltuiala, get_id, get_suma, get_nr_apartament, get_tip
 
 
-def adunarea_unei_valori_la_toate_cheltuielile_data(valoare, data, lista):
+def adunarea_unei_valori_la_toate_cheltuielile_data(valoare, data, lista, undo_list, redo_list):
     '''
     Aduna o valoare data la toate cheltuielile dintr-o data citita.
     :param valoare: float
@@ -9,6 +9,8 @@ def adunarea_unei_valori_la_toate_cheltuielile_data(valoare, data, lista):
     :param lista: lista de cheltuieli
     :return: lista cu modificarile cerute
     '''
+    undo_list.append(lista)
+    redo_list.clear()
     if valoare < 0:
         raise ValueError("Nu puteti adauga o suma negativa.")
     l = []
